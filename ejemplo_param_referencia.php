@@ -21,8 +21,6 @@
 
       echo $cadena;
 
-
-
      ?>
   </body>
 </html>
