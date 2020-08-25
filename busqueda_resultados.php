@@ -3,16 +3,9 @@
   <head>
     <meta charset="utf-8">
     <title></title>
-    <style media="screen">
-      table{
-        width: 50%;
-        border: 1px dotted #FF0000;
-        margin: auto;
-      }
-    </style>
-  </head>
-  <body>
     <?php
+
+    function ejecuta_consulta($labusqueda){
 
       require("datos_conexion.php");
 
@@ -25,11 +18,12 @@
         exit();
 
       }
+      
       mysqli_select_db($conexion,$db_name) or die ("No se encuentra la base de datos");
 
       mysqli_set_charset($conexion,"utf8");
 
-      $query="SELECT * FROM productos";//Filtro WHERE Edad<'30'
+      $query="SELECT * FROM productos WHERE nombre_articulo LIKE '%$labusqueda%'";
 
       $resultados=mysqli_query($conexion,$query);//record set ó resulset
 
@@ -47,7 +41,40 @@
 
       mysqli_close($conexion);
 
+    }
+
+    ?>
+  </head>
+  <body>
+
+    <?php
+
+      @$mibusqueda=$_GET["buscar"];
+      $mipagina=$_SERVER["PHP_SELF"];
+
+      if($mibusqueda != NULL){
+        ejecuta_consulta($mibusqueda);
+      }else{
+        echo("<form action='" . $mipagina . "'method='get'>
+        <label>Buscar:<input type='text' name='buscar'></label>
+        <input type='submit' name='enviando' value='Dale!'>
+        </form>");
+      }
 
      ?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   </body>
 </html>
