@@ -3,9 +3,9 @@
   <head>
     <meta charset="utf-8">
     <title></title>
+  </head>
+  <body>
     <?php
-
-    function ejecuta_consulta($labusqueda){
 
       require("datos_conexion.php");
 
@@ -23,25 +23,13 @@
 
       mysqli_set_charset($conexion,"utf8");
 
-      $query="SELECT * FROM productos WHERE nombre_articulo LIKE '%$labusqueda%'";
+      $query="INSERT INTO productos (seccion,nombre_articulo,precio) VALUES ('Deportes','Raqueta de Badminton',39.99)";
 
       $resultados=mysqli_query($conexion,$query);//record set ó resulset
 
-      while($fila=mysqli_fetch_array($resultados, MYSQLI_ASSOC)){
-
-        echo "<table><tr><td>";
-
-        echo $fila['seccion'] . "</td><td> ";
-        echo $fila['nombre_articulo'] . "</td><td> ";
-        echo $fila['precio'] . "</td><td> ";
-        echo $fila['pais_de_origen'] . "</td><td></tr></table>";
-        echo "<br>";
-
-      }
-
       mysqli_close($conexion);
 
-    }
+
 
     ?>
   </head>
@@ -62,6 +50,5 @@
       }
 
      ?>
-
   </body>
 </html>
