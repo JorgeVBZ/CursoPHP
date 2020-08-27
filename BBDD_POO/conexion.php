@@ -1,28 +1,34 @@
 <?php
-public function Conexion(){
+    require('config.php');
+    class Conexion{
+        protected $conexion_db;
 
-//conexion libreria mysqli 
-/*************************************************************************************** 
-$this->conexion_db=new mysqli(DB_HOST,DB_USER,DB_PASS,DB_NAME);
-if($this->conexion_db->connect_errno){
-@@ -17,6 +20,20 @@ public function Conexion(){
-$this->conexion_db->set_charset(DB_CHARSET);
-//echo "Conexion realizada con éxito a la base de datos llamada " . DB_NAME . "<br>";
-*******************************************************************************************/
+        public function Conexion(){
 
-try{
+            //conexion libreria mysqli 
+            /*************************************************************************************** 
+            $this->conexion_db=new mysqli(DB_HOST,DB_USER,DB_PASS,DB_NAME);
+            if($this->conexion_db->connect_errno){
+                echo "Fallo al conectar a MySQL" . $this->conexion_db->connect_error;
+                return;
+            }
+            $this->conexion_db->set_charset(DB_CHARSET);
+            //echo "Conexion realizada con éxito a la base de datos llamada " . DB_NAME . "<br>";
+            *******************************************************************************************/
 
-    $this->conexion_db = new PDO('mysql:host=localhost;dbname=pruebas', 'root', '');
-    $this->conexion_db->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
-    $this->conexion_db->exec("SET CHARACTER SET utf8");
+            try{
 
-    return $this->conexion_db;
+                $this->conexion_db = new PDO('mysql:host=localhost;dbname=pruebas', 'root', '');
+                $this->conexion_db->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+                $this->conexion_db->exec("SET CHARACTER SET utf8");
 
-}catch(Exception $e){
-    echo "La línea del error es: " . $e->getLine();
-}
+                return $this->conexion_db;
 
-}
+            }catch(Exception $e){
+                echo "La línea del error es: " . $e->getLine();
+            }
 
-}
+        }
+
+    }
 ?>

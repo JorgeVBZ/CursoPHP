@@ -6,8 +6,6 @@
 
         }
 
-        public function get_productos(){
-
         public function get_productos($dato){
             //Libreria mysqli
         /*********************************************************************************************************** 

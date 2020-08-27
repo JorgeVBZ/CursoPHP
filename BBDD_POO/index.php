@@ -5,8 +5,7 @@
     $pais=$_GET["buscar"];
 
     $productos=new DevuelveProductos();
-
-    $array_productos=$productos->get_productos();
+    
     $array_productos=$productos->get_productos($pais);
 
 ?>
