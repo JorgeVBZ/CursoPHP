@@ -7,7 +7,8 @@
 <body>
 <?php
 
-    $busqueda=$_GET["buscar"];
+    $busqueda_sec=$_GET["seccion"];
+    $busqueda_porig=$_GET["p_orig"];
 
     try{
         $base=new PDO('mysql:host=localhost; dbname=pruebas','root','');
@@ -16,11 +17,11 @@
 
         $base->exec("SET CHARACTER SET utf8");
 
-        $sql="SELECT id,seccion,nombre_articulo,pais_de_origen,precio FROM productos WHERE nombre_articulo=?";
+        $sql="SELECT id,seccion,nombre_articulo,pais_de_origen,precio FROM productos WHERE seccion = :secc AND pais_de_origen = :porig";
 
         $resultado=$base->prepare($sql);
 
-        $resultado->execute(array("$busqueda"));
+        $resultado->execute(array(":secc"=>$busqueda_sec,":porig"=>$busqueda_porig));
 
         while($registro=$resultado->fetch(PDO::FETCH_ASSOC)){
 
