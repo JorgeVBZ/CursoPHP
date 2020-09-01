@@ -17,7 +17,40 @@ include ('conexion.php');//Conexion con BBDD creada
 //$conexion=$base->query("SELECT * from datos_usuarios");consulta
 //$registros=$conexion->fetchAll(PDO::FETCH_OBJ);//array de objetos
 
-$registros=$base->query("SELECT * from datos_usuarios")->fetchAll(PDO::FETCH_OBJ);//Array de objetos guardados en la BBDD
+//----------------------------------------------PAGINACION--------------------------------------------------------------------
+
+$tamaño_paginas=3;
+
+    if(isset($_GET["pagina"])){
+
+        if($_GET["pagina"]==1){
+
+            header("location:index.php");
+
+        }else{
+
+            $pagina=$_GET["pagina"];
+
+        }
+    }else{
+        $pagina=1;
+    }
+
+    $empezar_desde=($pagina-1)*$tamaño_paginas;
+
+    $sql_total="SELECT * FROM datos_usuarios";
+
+    $resultado=$base->prepare($sql_total);
+
+    $resultado->execute(array());
+
+    $num_registros=$resultado->rowCount();
+
+    $total_paginas=ceil($num_registros/$tamaño_paginas);
+
+    //------------------------------------------------------------------------------------------------------------------------------
+
+$registros=$base->query("SELECT * from datos_usuarios LIMIT $empezar_desde,$tamaño_paginas")->fetchAll(PDO::FETCH_OBJ);//Array de objetos guardados en la BBDD
 
 
 if(isset($_POST["cr"])){
@@ -78,11 +111,36 @@ if(isset($_POST["cr"])){
       <td><input type='text' name='Nom' size='10' class='centrado'></td>
       <td><input type='text' name='Ape' size='10' class='centrado'></td>
       <td><input type='text' name=' Dir' size='10' class='centrado'></td>
-      <td class='bot'><input type='submit' name='cr' id='cr' value='Insertar'></td></tr>    
+      <td class='bot'><input type='submit' name='cr' id='cr' value='Insertar'></td></tr>  
+      <tr><td>
+
+      <?php
+
+        //echo "Numero de registros de la consulta: " . $num_registros . "<br><br>";
+        //echo "Mostramos " . $tamaño_paginas . " registros por página <br><br>";
+        //echo "Mostrando la página " . $pagina . " de " . $total_paginas . "<br><br>";
+
+//------------------------------------------------PAGINACION---------------------------------------------------------------------------------
+
+        for($i=1;$i<=$total_paginas;$i++){
+
+
+
+        echo "<a href='?pagina=" . $i . "'>" . $i . "</a>  ";
+
+        }
+
+      ?>
+
+      </td></tr>  
   </table>
 
   </form>
 
+  
+    
+
 <p>&nbsp;</p>
+
 </body>
 </html>
