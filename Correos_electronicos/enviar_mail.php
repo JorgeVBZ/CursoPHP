@@ -17,7 +17,7 @@
 
     $headers.= "Content-type: text/html; charset=utf8\r\n";
 
-    $headers.= "From: Prueba Jorge <jorge.espia@hotmail.es>\r\n";
+    $headers.= "From: Prueba Jorge <rmiwwogx@hl109.lucushost.org>\r\n";
 
     $exito = mail($destinatario,$asunto,$texto_mail,$headers);
 
